@@ -1,0 +1,15 @@
+<button (click)="start()">Start Server</button>
+<button (click)="stop()">Stop Server</button>
+
+<table class="table table-striped">
+  <tbody>
+  <tr *ngFor="let body of planetsService.planets.bodies">
+    <td>
+      {{body.x}}
+    </td>
+    <td>
+      {{body.y}}
+    </td>
+  </tr>
+  </tbody>
+</table>
