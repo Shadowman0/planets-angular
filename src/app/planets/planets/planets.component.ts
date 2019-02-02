@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PlanetsService} from '../planets.service';
+import {PlanetdrawerService} from '../planetdrawer.service';
 
 @Component({
   selector: 'app-planets',
@@ -8,7 +9,7 @@ import {PlanetsService} from '../planets.service';
 })
 export class PlanetsComponent implements OnInit {
 
-  constructor(private planetsService: PlanetsService) {
+  constructor(private planetsService: PlanetsService, private planetdrawerService: PlanetdrawerService) {
   }
 
   ngOnInit() {
@@ -16,6 +17,7 @@ export class PlanetsComponent implements OnInit {
 
   start() {
     this.planetsService.start();
+    this.planetdrawerService.animate();
   }
 
   stop() {

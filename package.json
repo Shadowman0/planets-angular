@@ -23,7 +23,9 @@
     "@stomp/ng2-stompjs": "^7.2.0",
     "core-js": "^2.6.3",
     "ngx-socket-io": "^2.1.1",
+    "orbit-controls-es6": "^2.0.0",
     "rxjs": "^6.4.0",
+    "three": "^0.101.1",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {
@@ -35,6 +37,7 @@
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "~10.12.20",
     "codelyzer": "~4.5.0",
+    "@types/three": "^0.93.19",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.0",

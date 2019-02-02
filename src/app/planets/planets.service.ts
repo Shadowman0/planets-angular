@@ -4,7 +4,7 @@ import {Socket} from 'ngx-socket-io';
 import {RxStompService} from '@stomp/ng2-stompjs';
 import {Subscription} from 'rxjs';
 
-class Planet {
+export class Planet {
   x: number;
   y: number;
 }
@@ -14,13 +14,15 @@ class Planet {
 })
 export class PlanetsService {
   bodiesSubscription: Subscription;
-  planets: {bodies: Array<Planet>} = {bodies: []};
+  planets: { bodies: Array<Planet> } = {bodies: []};
   url = 'http://localhost:8080';
+  started: boolean;
 
   constructor(private http: HttpClient, private broker: RxStompService) {
   }
 
   start() {
+    this.started = true;
     this.http
       .post(`${this.url}/start`, null, {})
       .subscribe();
@@ -28,6 +30,7 @@ export class PlanetsService {
   }
 
   stop() {
+    this.started = false;
     this.http
       .post(`${this.url}/stop`, null, {})
       .subscribe();
@@ -37,7 +40,6 @@ export class PlanetsService {
   subscribeToBodiesSocket() {
     this.bodiesSubscription = this.broker.watch('/topic/bodies').subscribe(value => {
         this.planets = JSON.parse(value.body);
-        // console.log(this.planets);
       }
     );
   }

@@ -7,17 +7,18 @@ import {PlanetsComponent} from './planets/planets/planets.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from '@stomp/ng2-stompjs';
 import {myRxStompConfig} from './my-rx-stomp.config';
+import { WebglComponent } from './planets/webgl/webgl.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PlanetsComponent
+    PlanetsComponent,
+    WebglComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    // AppSocketModule
   ],
   providers: [HttpClient,
     {
