@@ -28,7 +28,7 @@ export class WebglService {
       this.webGlRenderer.domElement
     );
     this.webGlRenderer.setSize(hostElement.clientWidth, hostElement.clientWidth / 1.8);
-    this.camera = new THREE.PerspectiveCamera(23, 1.77, 10, 10000);
+    this.camera = new THREE.PerspectiveCamera(23, 1.77, 10, 50000);
     this.camera.position.set(0, 50, 1900);
 
 

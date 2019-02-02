@@ -24,9 +24,9 @@ export class WebglComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.webgl.init(this.canvasContainer, this.renderer2);
     this.webgl.addControls();
-    this.line = this.webgl.makeLine();
+    // this.line = this.webgl.makeLine();
     // this.webgl.makeSpere(0, 0);
-    this.webgl.makeSpere(0, 100);
+    // this.webgl.makeSpere(0, 100);
   }
 
   animate() {
