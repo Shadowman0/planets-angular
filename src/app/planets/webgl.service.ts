@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import './js/EnableThreeExamples';
 import 'three/examples/js/controls/OrbitControls';
 import 'three/examples/js/loaders/ColladaLoader';
+import {Mesh} from 'three';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class WebglService {
   private scene = new THREE.Scene();
   private webGlRenderer: THREE.WebGLRenderer;
   private controls: THREE.OrbitControls;
+  private controlSphere: Mesh;
 
   init(hostElementRef: ElementRef, ngRenderer: Renderer2) {
     const hostElement = hostElementRef.nativeElement;
@@ -37,39 +39,49 @@ export class WebglService {
     const light = new THREE.SpotLight(0xffffff);
     light.position.set(0, 1500, 1000);
     this.scene.add(light);
-
+    this.makeAxes();
     this.webGlRenderer.render(this.scene, this.camera);
   }
 
   public addControls() {
     this.controls = new THREE.OrbitControls(this.camera);
+    // this.controls.enableRotate = false;
+    // this.controls.enablePan = false;
+    // this.controls.target = false;
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
+
+    const material = new THREE.MeshBasicMaterial({color: 0x000000});
+    const sphere = new THREE.Mesh(new THREE.SphereBufferGeometry(5, 0, 200), material);
+    sphere.position.set(this.controls.target.x, this.controls.target.y, this.controls.target.z);
+    this.scene.add(sphere);
+    this.controlSphere = sphere;
   }
 
-  makeLine(): THREE.Line {
-    const geometry = new THREE.Geometry();
+  makeAxes() {
+    this.drawLine(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1000, 0));
+    this.drawLine(new THREE.Vector3(0, 0, 0), new THREE.Vector3(1000, 0, 0));
+    this.drawLine(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 1000));
+    this.render();
+  }
 
-    geometry.vertices.push(new THREE.Vector3(-200, 0, 200));
-    geometry.vertices.push(new THREE.Vector3(0, 200, 200));
-    geometry.vertices.push(new THREE.Vector3(200, 0, 200));
-
+  private drawLine(vector1, vector2) {
     const material = new THREE.LineBasicMaterial({
-      color: 0x0000ff,
+      color: 0x000000,
       linewidth: 10
     });
+    const geometry = new THREE.Geometry();
+    geometry.vertices.push(vector1);
+    geometry.vertices.push(vector2);
     const line = new THREE.Line(geometry, material);
-
     this.scene.add(line);
-    this.webGlRenderer.render(this.scene, this.camera);
-
     return line;
   }
 
   makeSpere(x: number, y: number): THREE.Mesh {
     const material = new THREE.MeshBasicMaterial({color: 0xff0000});
     const sphere = new THREE.Mesh(new THREE.SphereBufferGeometry(5, 0, 200), material);
-    sphere.position.set(x, y, 200);
+    sphere.position.set(x, y, 0);
     this.scene.add(sphere);
     this.webGlRenderer.render(this.scene, this.camera);
     return sphere;
@@ -101,6 +113,9 @@ export class WebglService {
   }
 
   render() {
+    if (this.controlSphere) {
+      this.controlSphere.position.set(this.controls.target.x, this.controls.target.y, this.controls.target.z);
+    }
     this.webGlRenderer.render(this.scene, this.camera);
   }
 }

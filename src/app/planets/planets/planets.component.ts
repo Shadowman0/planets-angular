@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PlanetsService} from '../planets.service';
 import {PlanetdrawerService} from '../planetdrawer.service';
 
@@ -7,7 +7,7 @@ import {PlanetdrawerService} from '../planetdrawer.service';
   templateUrl: './planets.component.html',
   styles: []
 })
-export class PlanetsComponent implements OnInit {
+export class PlanetsComponent implements OnInit, OnDestroy {
 
   constructor(private planetsService: PlanetsService, private planetdrawerService: PlanetdrawerService) {
   }
@@ -21,6 +21,10 @@ export class PlanetsComponent implements OnInit {
   }
 
   stop() {
+    this.planetsService.stop();
+  }
+
+  ngOnDestroy(): void {
     this.planetsService.stop();
   }
 }
